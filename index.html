@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Writing Assistant - Real-time AI suggestions to improve your writing with grammar fixes, style improvements, and tone adjustments">
+    <meta name="keywords" content="AI writing, writing assistant, content creation, grammar checker, writing tool">
+    <meta name="author" content="Youware">
+    <meta property="og:title" content="AI Writing Assistant">
+    <meta property="og:description" content="Enhance your writing with real-time AI suggestions, grammar fixes, and style improvements">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#007bff">
+    <title>AI Writing Assistant | Enhance Your Writing with AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+</head>
+<body>
+    <header>
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center;">
+            <h1>🤖 AI Writing Assistant</h1>
+            <nav>
+                <a href="#" id="dashboard-link">📊 Dashboard</a>
+                <a href="#" id="login-link">👤 Login</a>
+            </nav>
+        </div>
+    </header>
+    <div id="login-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="text" id="login-name" placeholder="Username" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="signup-link">Sign up</a></p>
+        </div>
+    </div>
+    <div id="signup-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Sign Up</h2>
+            <form id="signup-form">
+                <input type="text" id="signup-name" placeholder="Username" required>
+                <input type="password" id="signup-password" placeholder="Password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+            <p>Already have an account? <a href="#" id="login-link-from-signup">Login</a></p>
+        </div>
+    </div>
+    <main>
+        <div class="container">
+            <div class="editor">
+                <div id="demo-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.75); border-radius: 12px; display: flex; align-items: center; justify-content: center; z-index: 5; transition: all 0.5s ease; backdrop-filter: blur(8px);">
+                    <!-- Enhanced interactive demo overlay with immediate visual impact -->
+                    <div class="demo-card" style="text-align: center; background: linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(248, 250, 252, 0.97)); padding: 35px; border-radius: 20px; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25); border: 3px solid transparent; border-image: linear-gradient(135deg, #007bff, #6f42c1) 1; max-width: 650px; animation: pulse-glow 3s infinite, appear 0.8s ease-out; transform: scale(1); transition: all 0.4s ease;">
+                        <div style="position: absolute; top: -16px; left: 50%; transform: translateX(-50%); background: var(--color-brand-blue-gradient); color: white; font-weight: 700; padding: 6px 20px; border-radius: 30px; font-size: 0.85rem; box-shadow: var(--shadow-blue); white-space: nowrap;">
+                            <span style="margin-right: 5px;">✨</span> AI DEMO STARTING AUTOMATICALLY <span style="margin-left: 5px;">✨</span>
+                        </div>
+                        <div style="margin-bottom: 25px; display: flex; align-items: center; justify-content: center;">
+                            <div style="width: 70px; height: 70px; background: var(--gradient-cosmic); border-radius: 35px; display: flex; align-items: center; justify-content: center; margin-right: 20px; box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5); animation: float 3s ease-in-out infinite; position: relative;">
+                                <div style="position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 0deg, transparent 0%, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%, transparent 100%); animation: spin 5s linear infinite;"></div>
+                                <span style="font-size: 36px; color: white; position: relative;">🤖</span>
+                            </div>
+                            <div style="text-align: left;">
+                                <div style="font-size: 1.7rem; font-weight: 800; background: linear-gradient(90deg, #007bff, #6f42c1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 5px; letter-spacing: -0.01em;">AI Writing Assistant</div>
+                                <div style="color: #495057; font-size: 1rem; font-weight: 500; line-height: 1.4; display: flex; align-items: center;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#28a745" viewBox="0 0 16 16" style="margin-right: 8px;">
+                                        <path fill-rule="evenodd" d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm3.78-9.72a.75.75 0 0 0-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 0 0-1.06 1.06l2 2a.75.75 0 0 0 1.06 0l4.5-4.5z"/>
+                                    </svg>
+                                    Watching AI write in real-time
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin: 25px 0; padding: 18px; background: rgba(0, 123, 255, 0.05); border-radius: 12px; border-left: 5px solid #007bff; text-align: left; font-style: italic; box-shadow: 0 4px 15px rgba(0, 123, 255, 0.1); position: relative; overflow: hidden;">
+                            <div style="position: absolute; top: 0; left: 0; width: 30%; height: 3px; background: linear-gradient(90deg, #007bff, #00c6ff); border-radius: 3px;"></div>
+                            <div style="position: absolute; bottom: 0; right: 0; width: 30%; height: 3px; background: linear-gradient(90deg, #00c6ff, #007bff); border-radius: 3px;"></div>
+                            "See how AI transforms ordinary text into compelling content while providing real-time suggestions for clarity, style, and engagement!"
+                        </div>
+                        
+                        <!-- Demo progress system with animated icons -->
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin: 30px 0 25px;">
+                            <div class="demo-step active" style="display: flex; flex-direction: column; align-items: center; position: relative; flex: 1;">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #007bff, #00c6ff); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3); position: relative; z-index: 2;">
+                                    <span style="color: white; font-size: 18px;">🔍</span>
+                                </div>
+                                <span style="font-size: 0.8rem; color: #007bff; font-weight: 600;">Analyzing</span>
+                            </div>
+                            <div style="flex: 1; height: 3px; background: #e9ecef; position: relative; margin: 0 5px; top: -15px;">
+                                <div class="progress-connector" style="position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: linear-gradient(90deg, #007bff, #00c6ff); transition: width 0.5s ease;"></div>
+                            </div>
+                            <div class="demo-step" style="display: flex; flex-direction: column; align-items: center; position: relative; flex: 1; opacity: 0.6;">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #6f42c1, #8b5cf6); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; box-shadow: 0 5px 15px rgba(111, 66, 193, 0.2);">
+                                    <span style="color: white; font-size: 18px;">✍️</span>
+                                </div>
+                                <span style="font-size: 0.8rem; color: #6c757d; font-weight: 600;">Writing</span>
+                            </div>
+                            <div style="flex: 1; height: 3px; background: #e9ecef; position: relative; margin: 0 5px; top: -15px;">
+                                <div class="progress-connector" style="position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: linear-gradient(90deg, #6f42c1, #28a745); transition: width 0.5s ease;"></div>
+                            </div>
+                            <div class="demo-step" style="display: flex; flex-direction: column; align-items: center; position: relative; flex: 1; opacity: 0.6;">
+                                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #28a745, #20c997); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);">
+                                    <span style="color: white; font-size: 18px;">✨</span>
+                                </div>
+                                <span style="font-size: 0.8rem; color: #6c757d; font-weight: 600;">Enhancing</span>
+                            </div>
+                        </div>
+
+                        <div style="position: relative; width: 100%; height: 12px; background: #e9ecef; border-radius: 6px; overflow: hidden; margin: 20px 0;">
+                            <div id="demo-progress-bar" style="width: 15%; height: 100%; background: linear-gradient(90deg, #007bff, #00c6ff, #6f42c1); transition: width 0.8s ease-out; position: relative; overflow: hidden;">
+                                <div style="position: absolute; top: 0; left: -50%; right: -50%; bottom: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shine 1.5s infinite;"></div>
+                            </div>
+                        </div>
+                        <div id="demo-status" style="font-size: 0.95rem; color: #007bff; font-weight: 600; margin-bottom: 25px;">Initializing AI writing models...</div>
+                        <div style="display: flex; justify-content: center; gap: 15px;">
+                            <button id="start-demo-button" style="background: var(--color-brand-blue-gradient); color: white; border: none; padding: 12px 30px; border-radius: 30px; font-weight: 600; cursor: pointer; box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3); transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                                <div class="button-ripple" style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%); transform: scale(0); transition: transform 0.5s ease-out; border-radius: 50%;"></div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 10px;">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>
+                                </svg>
+                                Start Now
+                            </button>
+                            <button id="skip-demo-button" onclick="document.getElementById('demo-overlay').style.display='none'" style="background: transparent; color: #6c757d; border: 1px solid #ced4da; padding: 12px 20px; border-radius: 30px; font-weight: 500; cursor: pointer; transition: all 0.2s ease;">
+                                Skip Demo
+                            </button>
+                        </div>
+                    </div>
+                    <style>
+                        @keyframes pulse-glow {
+                            0%, 100% { box-shadow: 0 15px 50px rgba(0, 123, 255, 0.25); }
+                            50% { box-shadow: 0 15px 60px rgba(0, 123, 255, 0.35); }
+                        }
+                        @keyframes appear {
+                            0% { opacity: 0; transform: scale(0.9); }
+                            100% { opacity: 1; transform: scale(1); }
+                        }
+                        @keyframes float {
+                            0%, 100% { transform: translateY(0); }
+                            50% { transform: translateY(-10px); }
+                        }
+                        @keyframes shine {
+                            0% { transform: translateX(-100%); }
+                            100% { transform: translateX(100%); }
+                        }
+                        @keyframes spin {
+                            0% { transform: rotate(0deg); }
+                            100% { transform: rotate(360deg); }
+                        }
+                        #start-demo-button:hover {
+                            transform: translateY(-3px);
+                            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.5);
+                        }
+                        #start-demo-button:hover .button-ripple {
+                            transform: scale(2);
+                        }
+                        #start-demo-button:active {
+                            transform: translateY(-1px);
+                        }
+                        #skip-demo-button:hover {
+                            background: rgba(0,0,0,0.05);
+                            color: #495057;
+                        }
+                        .demo-step.active span {
+                            color: #007bff;
+                        }
+                    </style>
+                </div>
+                <textarea id="text-input" placeholder="✨ Start writing your masterpiece... 
+
+🚀 Real-time AI suggestions will appear as you type
+📝 Get help with grammar, style, and tone
+💡 Use smart prompts to overcome writer's block
+🎯 Perfect for blogs, emails, essays, and more
+
+✨ DEMO: Watch the AI demo or start typing your own content →"></textarea>
+            </div>
+            <div class="sidebar">
+                <h2>Suggestions <span class="feature-highlight">AI-Powered</span></h2>
+                <div id="suggestions">
+                    <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                        <div style="width: 36px; height: 36px; background: linear-gradient(135deg, #007bff, #00d2ff); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 10px;">
+                            <span style="color: white; font-size: 18px;">🤖</span>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600; margin-bottom: 3px;">AI Writing Assistant</div>
+                            <div style="font-size: 0.8rem; color: var(--color-muted);">Start writing to get AI-powered suggestions</div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <h2>Tone</h2>
+                <select id="tone">
+                    <option value="formal">Formal</option>
+                    <option value="informal">Informal</option>
+                    <option value="persuasive">Persuasive</option>
+                </select>
+                <h2>Writing Prompts</h2>
+                <div style="margin-bottom: 10px; padding: 10px; background: linear-gradient(135deg, #e8f5e8, #d4edda); border-radius: 8px; font-size: 0.8rem; color: #2e7d32; border-left: 3px solid #28a745; animation: highlight-pulse 2s infinite;">
+                    <strong>💡 Pro Tip:</strong> Click any prompt to see AI generate content instantly!
+                </div>
+                
+                <style>
+                    @keyframes highlight-pulse {
+                        0%, 100% { box-shadow: 0 0 0 rgba(40, 167, 69, 0); }
+                        50% { box-shadow: 0 0 10px rgba(40, 167, 69, 0.2); }
+                    }
+                </style>
+                <div id="prompts">
+                    <button class="prompt-btn">💡 Brainstorm ideas</button>
+                    <button class="prompt-btn">📝 Write a blog post</button>
+                    <button class="prompt-btn">📱 Write a social media post</button>
+                    <button class="prompt-btn">✉️ Write an email</button>
+                    <button class="prompt-btn">📄 Create an outline</button>
+                    <button class="prompt-btn">🎯 Write a summary</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Success Stories Section -->
+        <div style="max-width: 1400px; margin: 2rem auto; padding: 0 2rem;">
+            <div style="background: linear-gradient(135deg, #f0f8ff 0%, #e7f1f8 100%); border-radius: 16px; padding: 2.5rem; border: 1px solid rgba(0, 123, 255, 0.1); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div style="display: inline-flex; align-items: center; background: var(--color-brand-blue-gradient); padding: 8px 16px; border-radius: 25px; box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2); margin-bottom: 10px;">
+                        <span style="font-size: 1.3rem; margin-right: 10px;">✨</span>
+                        <span style="font-weight: 700; color: white; font-size: 1rem;">See What Our AI Can Do</span>
+                    </div>
+                    <h3 style="font-size: 1.8rem; background: linear-gradient(90deg, #007bff, #00c6ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 15px;">Transform Your Writing</h3>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.8rem; margin-bottom: 2rem;">
+                    <div style="background: white; padding: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 15px 35px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 25px rgba(0,0,0,0.08)';">
+                        <div style="position: relative; padding: 20px; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                            <div style="position: absolute; top: 0; left: 0; height: 4px; width: 100%; background: linear-gradient(90deg, #dc3545, #fd7e14);"></div>
+                            <h4 style="font-size: 1rem; color: #dc3545; margin-bottom: 1rem; display: flex; align-items: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;">
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                                Before AI Help:
+                            </h4>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; font-style: italic; color: #6c757d; position: relative; border-left: 3px solid #dc3545;">
+                                <span style="position: absolute; top: -10px; left: 10px; background: white; padding: 0 5px; color: #dc3545; font-size: 0.7rem; font-weight: 600; border-radius: 4px;">ORIGINAL</span>
+                                "I wanted to write about technology but I wasn't sure how to start and my sentences felt awkward."
+                            </div>
+                        </div>
+                        
+                        <div style="padding: 20px;">
+                            <h4 style="font-size: 1rem; color: #28a745; margin-bottom: 1rem; display: flex; align-items: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;">
+                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                </svg>
+                                After AI Suggestions:
+                            </h4>
+                            <div style="background: #f0fff4; padding: 15px; border-radius: 8px; color: var(--color-text); position: relative; border-left: 3px solid #28a745;">
+                                <span style="position: absolute; top: -10px; left: 10px; background: white; padding: 0 5px; color: #28a745; font-size: 0.7rem; font-weight: 600; border-radius: 4px;">IMPROVED</span>
+                                "Technology is revolutionizing our daily lives in unprecedented ways. From smart homes that adapt to our preferences to AI assistants that streamline our workflows, we're witnessing a digital transformation that enhances human potential."
+                            </div>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.05)); padding: 10px; text-align: center; font-size: 0.8rem; color: #28a745; font-weight: 500;">
+                            AI provided structure, clarity and professional style
+                        </div>
+                    </div>
+                    
+                    <div style="background: white; padding: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 15px 35px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 25px rgba(0,0,0,0.08)';">
+                        <div style="position: relative; padding: 20px; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                            <div style="position: absolute; top: 0; left: 0; height: 4px; width: 100%; background: linear-gradient(90deg, #dc3545, #fd7e14);"></div>
+                            <h4 style="font-size: 1rem; color: #dc3545; margin-bottom: 1rem; display: flex; align-items: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;">
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                                Before AI Help:
+                            </h4>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; font-style: italic; color: #6c757d; position: relative; border-left: 3px solid #dc3545;">
+                                <span style="position: absolute; top: -10px; left: 10px; background: white; padding: 0 5px; color: #dc3545; font-size: 0.7rem; font-weight: 600; border-radius: 4px;">ORIGINAL</span>
+                                "The meeting went good and we discussed things that was important for the project timeline."
+                            </div>
+                        </div>
+                        
+                        <div style="padding: 20px;">
+                            <h4 style="font-size: 1rem; color: #28a745; margin-bottom: 1rem; display: flex; align-items: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;">
+                                    <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                </svg>
+                                After Grammar Fix:
+                            </h4>
+                            <div style="background: #f0fff4; padding: 15px; border-radius: 8px; color: var(--color-text); position: relative; border-left: 3px solid #28a745;">
+                                <span style="position: absolute; top: -10px; left: 10px; background: white; padding: 0 5px; color: #28a745; font-size: 0.7rem; font-weight: 600; border-radius: 4px;">IMPROVED</span>
+                                "The meeting went well, and we discussed important matters regarding the project timeline."
+                            </div>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.05)); padding: 10px; text-align: center; font-size: 0.8rem; color: #28a745; font-weight: 500;">
+                            AI fixed grammar issues and improved clarity
+                        </div>
+                    </div>
+                    
+                    <div style="background: white; padding: 0; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)';this.style.boxShadow='0 15px 35px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 25px rgba(0,0,0,0.08)';">
+                        <div style="position: relative; padding: 20px; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                            <div style="position: absolute; top: 0; left: 0; height: 4px; width: 100%; background: linear-gradient(90deg, #007bff, #00c6ff);"></div>
+                            <h4 style="font-size: 1rem; color: #007bff; margin-bottom: 1rem; display: flex; align-items: center;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;">
+                                    <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"/>
+                                </svg>
+                                Tone Adjustment Power:
+                            </h4>
+                            <div style="display: flex; align-items: center; justify-content: center;">
+                                <div style="text-align: center; padding: 12px; width: 50px; height: 50px; border-radius: 50%; background: #f8f9fa; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-right: 15px; box-shadow: inset 0 0 10px rgba(0,0,0,0.05);">🎯</div>
+                                <div style="font-weight: 600; font-size: 1.1rem; color: #007bff;">Convert between any writing style</div>
+                            </div>
+                        </div>
+                        
+                        <div style="padding: 20px;">
+                            <div style="margin-bottom: 15px; position: relative;">
+                                <span style="position: absolute; top: -10px; left: 10px; background: white; padding: 3px 8px; color: #495057; font-size: 0.7rem; font-weight: 600; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">FORMAL</span>
+                                <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; color: #495057; border-left: 3px solid #6610f2;">
+                                    "We respectfully request your consideration of this proposal."
+                                </div>
+                            </div>
+                            
+                            <div style="position: relative; text-align: center; margin: 20px 0;">
+                                <div style="position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: #e9ecef; z-index: 1;"></div>
+                                <div style="display: inline-flex; position: relative; z-index: 2; background: white; padding: 0 15px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#007bff" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            
+                            <div style="position: relative;">
+                                <span style="position: absolute; top: -10px; left: 10px; background: white; padding: 3px 8px; color: #fd7e14; font-size: 0.7rem; font-weight: 600; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">CASUAL</span>
+                                <div style="background: #fff4e6; padding: 15px; border-radius: 8px; color: var(--color-text); border-left: 3px solid #fd7e14;">
+                                    "Hey! Would love your thoughts on this idea."
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: linear-gradient(135deg, rgba(0, 123, 255, 0.1), rgba(0, 123, 255, 0.05)); padding: 10px; text-align: center; font-size: 0.8rem; color: #007bff; font-weight: 500;">
+                            AI adapts to your desired communication style
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button id="main-cta-button" onclick="document.getElementById('text-input').focus(); document.getElementById('demo-overlay').style.display = 'none';" style="background: var(--color-brand-blue-gradient); color: white; border: none; padding: 18px 36px; border-radius: 35px; font-weight: 700; font-size: 1.2rem; cursor: pointer; box-shadow: 0 12px 30px rgba(0, 123, 255, 0.5); transition: all 0.4s ease; position: relative; overflow: hidden; transform: scale(1);">
+                        <div class="button-ripple" style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%); transform: scale(0); transition: transform 0.6s ease-out; border-radius: 50%;"></div>
+                        <div style="display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 15px;">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>
+                            </svg>
+                            <span id="cta-text">Try It Yourself - Start Writing Now!</span>
+                        </div>
+                    </button>
+                </div>
+                
+                <script>
+                    const ctaButton = document.getElementById('main-cta-button');
+                    const rippleEffect = ctaButton.querySelector('.button-ripple');
+                    
+                    ctaButton.addEventListener('mouseenter', function() {
+                        this.style.transform = 'scale(1.05) translateY(-3px)';
+                        this.style.boxShadow = '0 18px 40px rgba(0, 123, 255, 0.6)';
+                        rippleEffect.style.transform = 'scale(2.5)';
+                    });
+                    
+                    ctaButton.addEventListener('mouseleave', function() {
+                        this.style.transform = 'scale(1) translateY(0)';
+                        this.style.boxShadow = '0 12px 30px rgba(0, 123, 255, 0.5)';
+                        rippleEffect.style.transform = 'scale(0)';
+                    });
+                    
+                    ctaButton.addEventListener('click', function() {
+                        // Add click animation
+                        this.style.transform = 'scale(0.98)';
+                        document.getElementById('cta-text').textContent = 'Taking you to the editor...';
+                        
+                        setTimeout(() => {
+                            this.style.transform = 'scale(1)';
+                            document.getElementById('cta-text').textContent = 'Try It Yourself - Start Writing Now!';
+                        }, 200);
+                    });
+                </script>
+            </div>
+        </div>
+        
+        <div id="dashboard" class="hidden">
+            <h2>Dashboard</h2>
+            <div id="projects"></div>
+            <button id="new-project-btn">New Project</button>
+        </div>
+    </main>
+    <!-- Load AI SDK Scripts -->
+    <script src="https://lib.youware.com/youware-ai-4.3.16.js"></script>
+    <script src="https://lib.youware.com/youware-openai-1.3.22.js"></script>
+    <script src="https://lib.youware.com/youware-zod-3.25.67.js"></script>
+    
+    <script src="script.js"></script>
+    <script src="ai.js"></script>
+</body>
+</html>
